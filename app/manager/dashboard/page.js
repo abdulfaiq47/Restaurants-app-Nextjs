@@ -11,21 +11,21 @@ export default function Dashboard() {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-     try {
-       let key = localStorage.getItem("Manager");
-       if (!key) {
-         toast.error("Secret key required — redirecting to secure page.");
-         setTimeout(() => {
-           router.replace("/areyoumanager");
-         }, 600);
-       } else {
-         setCheck(true);
-       }
-     } catch (error) {
-       toast.error("Authorization check failed — redirecting.");
-       router.replace("/");
-     }
-   }, [router]);
+    try {
+      let key = localStorage.getItem("Manager");
+      if (!key) {
+        toast.error("Secret key required — redirecting to secure page.");
+        setTimeout(() => {
+          router.replace("/areyoumanager");
+        }, 600);
+      } else {
+        setCheck(true);
+      }
+    } catch (error) {
+      toast.error("Authorization check failed — redirecting.");
+      router.replace("/");
+    }
+  }, [router]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -89,7 +89,6 @@ export default function Dashboard() {
           {allData.map((n, i) => (
             <li key={i}>
               {n.notification} — <small>{n.time}</small>
-
               <button onClick={() => deluser(n._id)}>delete</button>
             </li>
           ))}

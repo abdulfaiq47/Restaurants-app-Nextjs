@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const product = () => {
+const Product = () => {
   const router = useRouter();
   const [Check, setCheck] = useState(false);
   const [File, setFile] = useState(null);
@@ -138,4 +138,4 @@ const product = () => {
   );
 };
 
-export default product;
+export default Product;

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const areyoumanager = () => {
+const AreYouManager = () => {
   const router = useRouter();
   const [value, setvalue] = useState("");
 
@@ -33,4 +33,4 @@ const areyoumanager = () => {
   );
 };
 
-export default areyoumanager;
+export default AreYouManager;
