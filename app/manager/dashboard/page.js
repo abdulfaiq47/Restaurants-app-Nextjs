@@ -11,23 +11,21 @@ export default function Dashboard() {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (!checked) return;
-    // small safety: run only in client
-    try {
-      const key = localStorage.getItem("Manager");
-
-      if (!key) {
-        toast.error("Secret key required — redirecting to secure page.");
-
-        setTimeout(() => router.replace("/areyoumanager"), 600);
-      } else {
-        setChecked(true);
-      }
-    } catch (err) {
-      toast.error("Authorization check failed — redirecting.");
-      router.replace("/");
-    }
-  }, [router]);
+     try {
+       let key = localStorage.getItem("Manager");
+       if (!key) {
+         toast.error("Secret key required — redirecting to secure page.");
+         setTimeout(() => {
+           router.replace("/areyoumanager");
+         }, 600);
+       } else {
+         setCheck(true);
+       }
+     } catch (error) {
+       toast.error("Authorization check failed — redirecting.");
+       router.replace("/");
+     }
+   }, [router]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
