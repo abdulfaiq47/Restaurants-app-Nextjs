@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 const Product = () => {
   const router = useRouter();
   const [File, setFile] = useState(null);
-  const [checkk, setcheckk] = useState(second);
+  const [checkk, setcheckk] = useState(false);
   const {
     register,
     handleSubmit,
