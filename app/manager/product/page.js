@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 
 const Product = () => {
   const router = useRouter();
-  const [Check, setCheck] = useState(false);
   const [File, setFile] = useState(null);
+  const [checkk, setcheckk] = useState(second);
   const {
     register,
     handleSubmit,
@@ -17,22 +17,19 @@ const Product = () => {
   useEffect(() => {
     try {
       let key = localStorage.getItem("Manager");
-      if (!key) {
-        toast.error("Secret key required — redirecting to secure page.");
-        setTimeout(() => {
-          router.replace("/areyoumanager");
-        }, 600);
+      if (key) {
+        toast.success("Welcome");
+        setcheckk(true);
       } else {
-        setCheck(true);
+        toast.error("Don't have access to this apge");
+        setTimeout(() => {
+          router.replace("/manager/login");
+        }, 600);
       }
     } catch (error) {
-      toast.error("Authorization check failed — redirecting.");
-      router.replace("/");
+      console.log(error);
     }
   }, [router]);
-  if (!Check) {
-    return null;
-  }
 
   // useEffect(() => {
   //   let is = localStorage.getItem("Manager");
@@ -76,6 +73,8 @@ const Product = () => {
       toast.error("Something went wrong");
     }
   };
+
+  if (!checkk) return null;
   return (
     <div>
       <form onSubmit={handleSubmit(submit)}>

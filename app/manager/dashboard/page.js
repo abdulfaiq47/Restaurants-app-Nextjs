@@ -10,20 +10,22 @@ export default function Dashboard() {
   const prevCount = useRef(0); // to track previous notifications
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [checkk, setcheckk] = useState(false);
+
   useEffect(() => {
     try {
       let key = localStorage.getItem("Manager");
-      if (!key) {
-        toast.error("Secret key required — redirecting to secure page.");
-        setTimeout(() => {
-          router.replace("/areyoumanager");
-        }, 600);
+      if (key) {
+        toast.success("Welcome");
+        setcheckk(true);
       } else {
-        setCheck(true);
+        toast.error("Don't have access to this apge");
+        setTimeout(() => {
+          router.replace("/manager/login");
+        }, 600);
       }
     } catch (error) {
-      toast.error("Authorization check failed — redirecting.");
-      router.replace("/");
+      console.log(error);
     }
   }, [router]);
 
@@ -76,6 +78,8 @@ export default function Dashboard() {
       toast.error("Failed to delete notification");
     }
   };
+
+  if (!checkk) return null;
 
   return (
     <div style={{ padding: 20 }}>
