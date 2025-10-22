@@ -29,9 +29,8 @@ export async function POST(req) {
     }
 
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const PH = await bcrypt.compare(hashedPassword, find.password);
+    const PH = await bcrypt.compare(password, find.password);
     if (!PH) {
       return NextResponse.json({
         success: false,

@@ -3,16 +3,15 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/route";
 import bcrypt from "bcryptjs";
 
-
 export async function POST(req) {
   try {
     await connectDB();
 
-    const { email, password, secret } = await req.json();
+    const { name, email, password, secret } = await req.json();
     const Secretkey = process.env.SECRET_CODE;
 
     // 🧩 Basic validation
-    if (!email || !password || !secret) {
+    if (!name ||!email || !password || !secret) {
       return NextResponse.json({
         success: false,
         message: "All fields are required",
@@ -29,26 +28,26 @@ export async function POST(req) {
 
     // 🧩 Find manager by email
     const manager = await managerModel.findOne({ email });
-    if (!manager) {
+    if (manager) {
       return NextResponse.json({
         success: false,
-        message: "Email not found",
+        message: "Already have account",
       });
     }
 
-    
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // 🧩 Compare password
-    const isMatch = await bcrypt.compare(password, manager.password);
-    if (!isMatch) {
-      return NextResponse.json({
-        success: false,
-        message: "Invalid password",
-      });
-    }
+    const CreateModel = await managerModel.create({
+      name,
+      email,
+      password: hashedPassword
+    });
+
 
     return NextResponse.json(
-      { success: true, message: "Logged in successfully" },
+      { success: true, message: "Sign up  successfully" },
       { status: 200 }
     );
   } catch (error) {
