@@ -36,6 +36,8 @@ export async function POST(req) {
       });
     }
 
+    
+
     // 🧩 Compare password
     const isMatch = await bcrypt.compare(password, manager.password);
     if (!isMatch) {
