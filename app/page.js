@@ -256,6 +256,24 @@ export default function Home() {
       )}
       {productPopup ? (
         <ul className={style.product}>
+          <Image
+            onClick={() => {
+             
+              setProductPopup(false);
+            }}
+            style={{
+              color: "transparent",
+              cursor: "pointer",
+              position: "relative",
+              top: "-26px",
+              left: "-27px",
+              filter: "invert(1)",
+            }}
+            src="/close.svg"
+            height={30}
+            width={30}
+            alt="close"
+          ></Image>
           {proloading ? (
             <ClipLoader
               color={"black"}

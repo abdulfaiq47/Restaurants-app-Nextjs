@@ -4,6 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { TextField } from "@mui/material";
+import style from "./page.module.css";
 
 const Product = () => {
   const router = useRouter();
@@ -77,51 +79,76 @@ const Product = () => {
   if (!checkk) return null;
   return (
     <div>
-      <form onSubmit={handleSubmit(submit)}>
-        <input
+      <form className={style.form} onSubmit={handleSubmit(submit)}>
+        <TextField
+          label="Product Name"
+          variant="filled"
+          InputProps={{
+            style: { border: "0.5px solid white", color: "black" },
+          }}
+          InputLabelProps={{
+            style: { color: "gray" },
+          }}
           {...register("name", {
             required: { value: true, message: "Needs to fill" },
             minLength: { value: 3, message: "min Length is 3" },
-            maxLength: { value: 8, message: "Max length is 8" },
+            
           })}
-          type="text"
-          placeholder="Enter Product name"
         />
         {errors.name && <div>{errors.name.message}</div>}
         <br />
-        <hr />
-        <input
+
+        <TextField
+          label="Product price"
+          variant="filled"
+          InputProps={{
+            style: { border: "0.5px solid white", color: "black" },
+          }}
+          InputLabelProps={{
+            style: { color: "gray" },
+          }}
           {...register("price", {
             required: { value: true, message: "Needs to fill" },
           })}
-          type="text"
-          placeholder="Enter Product price"
         />
         {errors.price && <div>{errors.price.message}</div>}
         <br />
-        <hr />
-        <textarea
+
+        <TextField
+          label="Product Description"
+          variant="filled"
+          InputProps={{
+            style: { border: "0.5px solid white", color: "black" },
+          }}
+          InputLabelProps={{
+            style: { color: "gray" },
+          }}
           {...register("description", {
             required: { value: true, message: "Needs to fill" },
             minLength: { value: 3, message: "min Length is 3" },
           })}
-        ></textarea>
+        />
         {errors.description && <div>{errors.description.message}</div>}
         <br />
-        <hr />
-        <input
+
+        <TextField
+          label="Product Category"
+          variant="filled"
+          InputProps={{
+            style: { border: "0.5px solid white", color: "black" },
+          }}
+          InputLabelProps={{
+            style: { color: "gray" },
+          }}
           {...register("category", {
             required: { value: true, message: "Needs to fill" },
             minLength: { value: 3, message: "min Length is 3" },
             maxLength: { value: 8, message: "Max length is 8" },
           })}
-          type="text"
-          placeholder="Enter Product category"
         />
-
         {errors.category && <div>{errors.category.message}</div>}
         <br />
-        <hr />
+
         <input
           type="file"
           accept="image/*"
@@ -130,7 +157,7 @@ const Product = () => {
         />
         {File && <p style={{ color: "gray" }}>Selected file: {File.name}</p>}
         <br />
-        <hr />
+
         <button type="submit">Add Product</button>
       </form>
     </div>

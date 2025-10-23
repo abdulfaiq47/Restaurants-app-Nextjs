@@ -1,0 +1,18 @@
+.form {
+  width: 229px;
+  gap: 10px;
+  margin: auto;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: row;
+  width: 33vw;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-radius: 16px;
+
+  width: 40vw;
+  padding: 27px;
+}

@@ -1,10 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import style from "./page.module.css"
 
 const Navbar = () => {
   return (
-    <div>
-      <ul style={{display: "flex" , gap: "130px"}} >
+    <div className={style.Navbar}  >
+      <ul style={{}} >
         
         <Link href={"/"}>
           <li>Home</li>

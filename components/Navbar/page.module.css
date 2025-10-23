@@ -1,0 +1,32 @@
+.Navbar {
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #020024;
+  background: linear-gradient(
+    49deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(38, 38, 133, 1) 18%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  width: 78vw;
+  margin: auto;
+  margin-top: 11px;
+  border-radius: 12px;
+  box-shadow: 0 0 9px gra;
+}
+.Navbar ul {
+  display: flex;
+  gap: 130px;
+}
+
+@media screen and (min-width: 370px) {
+  .Navbar {
+    width: 98vw;
+    height: 46px;
+  }
+  .Navbar ul {
+    gap: 39px;
+  }
+}
