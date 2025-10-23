@@ -9,7 +9,7 @@ import { ClipLoader } from "react-spinners";
 
 export default function Home() {
   const [scann, setScann] = useState(false);
-  const [popup, setpopup] = useState(true);
+  const [popup, setpopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [notification, setnotification] = useState([]);
   const [tableNumber, setTableNumber] = useState("");
@@ -19,7 +19,7 @@ export default function Home() {
   const [proloading, setproloading] = useState(false);
 
   async function handleClick(e) {
-    const tablenum = e || tableNumber;
+    const tablenum = e;
 
     if (!tablenum) {
       return toast.error("Required Table Number");
@@ -141,7 +141,7 @@ export default function Home() {
                   setTableNumber(value);
                   setScann(false);
                   setpopup(true);
-                  handleClick();
+                  handleClick(value);
                   setTimeout(() => setIsProcessing(false), 3000); // unlock after 3s
                 }
               }
@@ -258,7 +258,6 @@ export default function Home() {
         <ul className={style.product}>
           <Image
             onClick={() => {
-             
               setProductPopup(false);
             }}
             style={{
