@@ -14,7 +14,10 @@ export async function POST(req) {
     }
     const Created = await notifimodel.create({
       notification: tableNumber,
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleTimeString("en-PK", {
+        timeZone: "Asia/Karachi",
+        hour12: true,
+      }),
     });
 
     return NextResponse.json(

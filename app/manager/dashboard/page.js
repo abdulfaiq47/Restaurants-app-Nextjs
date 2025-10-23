@@ -91,9 +91,29 @@ export default function Dashboard() {
       ) : (
         <ul>
           {allData.map((n, i) => (
-            <li key={i}>
+            <li
+              style={{
+                margin: "13px 0 13px 0",
+                listStyle: "none",
+                display: "flex",
+                gap: "10px",
+              }}
+              key={i}
+            >
               {n.notification} — <small>{n.time}</small>
-              <button onClick={() => deluser(n._id)}>delete</button>
+              <button
+                style={{
+                  background: "#0070f3",
+                  color: "white",
+                  padding: "5px 5px",
+                  borderRadius: "10px",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+                onClick={() => deluser(n._id)}
+              >
+                delete
+              </button>
             </li>
           ))}
         </ul>

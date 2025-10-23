@@ -5,16 +5,18 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import { toast } from "react-toastify";
 import style from "./page.module.css";
 import Image from "next/image";
+import { ClipLoader } from "react-spinners";
 
 export default function Home() {
   const [scann, setScann] = useState(false);
-  const [popup, setpopup] = useState(false);
+  const [popup, setpopup] = useState(true);
   const [loading, setLoading] = useState(false);
   const [notification, setnotification] = useState([]);
   const [tableNumber, setTableNumber] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [productPopup, setProductPopup] = useState(false);
   const [products, setproducts] = useState([]);
+  const [proloading, setproloading] = useState(false);
 
   async function handleClick(e) {
     const tablenum = e || tableNumber;
@@ -76,23 +78,56 @@ export default function Home() {
 
   async function handlePro() {
     try {
-      let fetc = await fetch("/api/getproduct");
-      let res = await fetc.json();
-      let product = await res.product;
+      if (productPopup) {
+        setProductPopup(false);
+        return;
+      }
+      setProductPopup(true); // Show popup first
+      setproloading(true); // Then show loader inside it
 
-      setproducts(product);
-      productPopup ? setProductPopup(false) : setProductPopup(true);
+      const fetc = await fetch("/api/getproduct");
+      const res = await fetc.json();
+
+      setproducts(res.product);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    } finally {
+      setproloading(false); // Hide loader after data is loaded
     }
   }
+
   return (
     <div style={{ textAlign: "center", padding: "2rem" }}>
-      <h1>QR Code Scanner</h1>
+      <h1>Weclome To Our Resturents App</h1>
+
       {scann ? (
-        <button onClick={() => setScann(false)}>Stop Scanning</button>
+        <button
+          style={{
+            background: "#0070f3",
+            color: "white",
+            padding: "12px 20px",
+            borderRadius: "10px",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onClick={() => setScann(false)}
+        >
+          Stop Scanning
+        </button>
       ) : (
-        <button onClick={() => setScann(true)}>Start Scanning</button>
+        <button
+          style={{
+            background: "#0070f3",
+            color: "white",
+            padding: "12px 20px",
+            borderRadius: "10px",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onClick={() => setScann(true)}
+        >
+          Start Scanning
+        </button>
       )}
       {scann === true && (
         <div className={style.scanner}>
@@ -130,7 +165,7 @@ export default function Home() {
           />
         </div>
       )}
-      <h2>Scanned Code Data:</h2>
+      <h2>Or</h2>
       <p style={{ marginTop: "1rem" }}>{}</p>
       <form onSubmit={FormHandle}>
         <input
@@ -171,10 +206,12 @@ export default function Home() {
                 setProductPopup(false);
               }}
               style={{
+                color: "transparent",
                 cursor: "pointer",
                 position: "relative",
-                top: "-52px",
-                left: "-121px",
+                top: "-26px",
+                left: "-27px",
+                filter: "invert(1)",
               }}
               src="/close.svg"
               height={30}
@@ -183,7 +220,9 @@ export default function Home() {
             ></Image>
 
             <div className={style.Bill}>
+              <h4>Want Bill?</h4>
               <Image
+                style={{ cursor: "pointer" }}
                 onClick={() => handleClick("Want Bill")}
                 src="/Bill.jpeg"
                 height={100}
@@ -192,7 +231,9 @@ export default function Home() {
               ></Image>
             </div>
             <div className={style.waiter}>
+              <h4>Want Waiter?</h4>
               <Image
+                style={{ cursor: "pointer" }}
                 onClick={() => handleClick("Want Waiter")}
                 src="/waiter.jpeg"
                 height={100}
@@ -201,7 +242,9 @@ export default function Home() {
               ></Image>
             </div>
             <div onClick={handlePro} className={style.products}>
+              <h4>Want Somethings?</h4>
               <Image
+                style={{ cursor: "pointer" }}
                 src="/produc.png"
                 height={100}
                 alt="products"
@@ -213,19 +256,32 @@ export default function Home() {
       )}
       {productPopup ? (
         <ul className={style.product}>
-          {products.map((n, i) => (
-            <li onClick={() => handleClick(` ${n.category} ${n.name}`)} key={i}>
-              <p>{n.name}</p>
-              <Image
-                src={n.imageUrl}
-                height={100}
-                width={100}
-                alt={n.name}
-              ></Image>
-              <p>RS: {n.price}</p>
-              <p>{n.description}</p>
-            </li>
-          ))}
+          {proloading ? (
+            <ClipLoader
+              color={"black"}
+              // cssOverride={override}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            products.map((n, i) => (
+              <li
+                onClick={() => handleClick(` ${n.category} ${n.name}`)}
+                key={i}
+              >
+                <p>{n.name}</p>
+                <Image
+                  src={n.imageUrl}
+                  height={100}
+                  width={100}
+                  alt={n.name}
+                ></Image>
+                <p>RS: {n.price}</p>
+                <p>{n.description}</p>
+              </li>
+            ))
+          )}
         </ul>
       ) : null}
     </div>
